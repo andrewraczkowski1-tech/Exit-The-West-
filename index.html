@@ -7,6 +7,7 @@
     <meta name="description" content="Escape the high cost of living, dating troubles, and political noise. Relocate, retire, or work remotely.">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -40,71 +41,32 @@
         }
        
         .glass-button {
-            background: linear-gradient(to bottom, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
         }
         .glass-button:hover {
-            background: rgba(255,255,255,0.08);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
         }
+
+        /* Ethena-style typography adjustments */
+        h1, h2, h3 {
+            letter-spacing: -0.02em;
+        }
+        
+        .hero-gradient-text {
+            background: linear-gradient(to right, #fff, #9ca3af);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
         /* Subtle grid background */
         .bg-grid {
-            background-size: 40px 40px;
-            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                              linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
-        }
-
-        /* Rotating Globe Animation */
-        .globe-container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 800px;
-            height: 800px;
-            perspective: 1000px;
-            opacity: 0.2;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .globe {
-            width: 100%;
-            height: 100%;
-            position: relative;
-            transform-style: preserve-3d;
-            animation: rotateGlobe 60s linear infinite;
-        }
-
-        .globe-ring {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 1px solid rgba(96, 165, 250, 0.3); /* Blue-ish transparent */
-            border-radius: 50%;
-            box-sizing: border-box;
-        }
-
-        /* Create meridians by rotating rings */
-        .ring-1 { transform: rotateY(0deg); }
-        .ring-2 { transform: rotateY(30deg); }
-        .ring-3 { transform: rotateY(60deg); }
-        .ring-4 { transform: rotateY(90deg); }
-        .ring-5 { transform: rotateY(120deg); }
-        .ring-6 { transform: rotateY(150deg); }
-
-        /* Equatorial/Latitudinal rings (scaled on Y axis to look like latitudes) */
-        .ring-lat-1 { transform: rotateX(90deg) scale(0.98); border-color: rgba(96, 165, 250, 0.15); }
-        .ring-lat-2 { transform: rotateX(90deg) translateZ(200px) scale(0.85); border-color: rgba(96, 165, 250, 0.15); }
-        .ring-lat-3 { transform: rotateX(90deg) translateZ(-200px) scale(0.85); border-color: rgba(96, 165, 250, 0.15); }
-        .ring-lat-4 { transform: rotateX(90deg) translateZ(350px) scale(0.45); border-color: rgba(96, 165, 250, 0.15); }
-        .ring-lat-5 { transform: rotateX(90deg) translateZ(-350px) scale(0.45); border-color: rgba(96, 165, 250, 0.15); }
-
-        @keyframes rotateGlobe {
-            from { transform: rotateY(0deg) rotateX(15deg); }
-            to { transform: rotateY(360deg) rotateX(15deg); }
+            background-size: 60px 60px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            mask-image: radial-gradient(circle at center, black 30%, transparent 100%);
         }
     </style>
 </head>
@@ -118,26 +80,10 @@
             <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-emerald-900/10 rounded-full blur-[120px]"></div>
             <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-900/10 rounded-full blur-[120px]"></div>
             
-            <!-- Rotating Globe -->
-            <div class="globe-container">
-                <div class="globe">
-                    <!-- Meridians -->
-                    <div class="globe-ring ring-1"></div>
-                    <div class="globe-ring ring-2"></div>
-                    <div class="globe-ring ring-3"></div>
-                    <div class="globe-ring ring-4"></div>
-                    <div class="globe-ring ring-5"></div>
-                    <div class="globe-ring ring-6"></div>
-                    <!-- Latitudes -->
-                    <div class="globe-ring ring-lat-1"></div>
-                    <div class="globe-ring ring-lat-2"></div>
-                    <div class="globe-ring ring-lat-3"></div>
-                    <div class="globe-ring ring-lat-4"></div>
-                    <div class="globe-ring ring-lat-5"></div>
-                </div>
-            </div>
-
-            <div class="absolute inset-0 bg-grid z-0"></div>
+            <!-- Three.js Globe -->
+            <canvas id="globe-canvas" class="absolute inset-0 z-0 opacity-40"></canvas>
+            
+            <div class="absolute inset-0 bg-grid z-0 opacity-20"></div>
         </div>
 
         <!-- Header -->
@@ -156,7 +102,7 @@
                     <a href="#problems" class="px-4 py-1.5 text-sm text-neutral-400 hover:text-white transition-colors font-medium">Why Exit?</a>
                     <a href="#videos" class="px-4 py-1.5 text-sm text-neutral-400 hover:text-white transition-colors font-medium">Videos</a>
                     <a href="#services" class="px-4 py-1.5 text-sm text-neutral-400 hover:text-white transition-colors font-medium">Services</a>
-                    <a href="#support" class="px-4 py-1.5 text-sm text-neutral-400 hover:text-white transition-colors font-medium">Support</a>
+                    <a href="#products" class="px-4 py-1.5 text-sm text-neutral-400 hover:text-white transition-colors font-medium">Products</a>
                 </nav>
 
                 <!-- Action -->
@@ -176,34 +122,70 @@
         </header>
 
         <!-- Hero Section -->
-        <section class="relative z-10 pt-24 pb-32 px-6">
-            <div class="max-w-4xl mx-auto text-center">
-                <div class="animate-fade-in inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-500/20 bg-emerald-500/10 text-emerald-400 text-xs font-medium mb-8">
-                    <span class="relative flex h-2 w-2">
-                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                      <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                    </span>
-                    Join the Movement
-                </div>
-               
-                <h1 class="animate-fade-in delay-100 text-5xl md:text-7xl font-medium tracking-tight text-white mb-6 leading-[1.1]">
-                    Escape the Noise.<br class="hidden md:block"> <span class="text-neutral-500">Live Your Best Life.</span>
-                </h1>
-               
-                <p class="animate-fade-in delay-200 text-lg text-neutral-400 max-w-xl mx-auto mb-10 leading-relaxed">
-                    Lower Cost of Living, Better Safety and Peace of Mind Await. Holiday, retire, or work remotely on your terms.
-                </p>
+        <section class="relative z-10 h-screen flex flex-col justify-center px-6 pt-20">
+            <div class="max-w-6xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <!-- Text Content -->
+                <div class="text-left z-20">
+                    <div class="animate-fade-in inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-white/80 text-xs font-medium mb-8 uppercase tracking-widest backdrop-blur-sm">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                        Exit The West
+                    </div>
+                   
+                    <h1 class="animate-fade-in delay-100 text-6xl md:text-8xl font-medium tracking-tighter text-white mb-8 leading-[1] hero-gradient-text">
+                        Geo Arbitrage <br>
+                        <span class="text-white/40">Your Life.</span>
+                    </h1>
+                   
+                    <p class="animate-fade-in delay-200 text-lg md:text-xl text-neutral-400 max-w-lg mb-10 leading-relaxed font-light">
+                        Lower Cost of Living, Better Safety.
+                    </p>
 
-                <div class="animate-fade-in delay-300 flex flex-col sm:flex-row items-center justify-center gap-4">
-                    <a href="#newsletter" class="w-full sm:w-auto px-8 py-3.5 rounded-full bg-white text-black font-medium hover:bg-neutral-200 transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(255,255,255,0.15)] hover:shadow-[0_0_25px_rgba(255,255,255,0.25)]">
-                        <i data-lucide="download" class="w-4 h-4 fill-current"></i>
-                        Get Free PDF
-                    </a>
-                    <a href="#videos" class="w-full sm:w-auto px-8 py-3.5 rounded-full glass-button border border-white/10 text-white font-medium hover:border-white/20 transition-all flex items-center justify-center gap-2">
-                        <i data-lucide="play-circle" class="w-4 h-4"></i>
-                        Watch Videos
-                    </a>
+                    <ul class="animate-fade-in delay-200 text-neutral-400 mb-10 space-y-2">
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
+                            Relocate
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
+                            Retire
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
+                            Work remotely
+                        </li>
+                    </ul>
+
+                    <div class="animate-fade-in delay-300 flex flex-col sm:flex-row items-start gap-4">
+                        <a href="#newsletter" class="group relative px-8 py-4 bg-white text-black font-medium text-sm rounded-lg overflow-hidden transition-all hover:bg-neutral-200 w-full sm:w-auto text-center">
+                            <span class="relative z-10 flex items-center justify-center gap-2">
+                                Get Free PDF
+                                <i data-lucide="arrow-right" class="w-4 h-4 transition-transform group-hover:translate-x-1"></i>
+                            </span>
+                        </a>
+                        <a href="#videos" class="group px-8 py-4 glass-button text-white font-medium text-sm rounded-lg w-full sm:w-auto text-center hover:bg-white/10 transition-all flex items-center justify-center gap-2">
+                            <i data-lucide="play-circle" class="w-4 h-4"></i>
+                            Watch Videos
+                        </a>
+                    </div>
+                    
+                    <div class="animate-fade-in delay-400 mt-12 grid grid-cols-3 gap-8 border-t border-white/10 pt-8">
+                        <div>
+                            <div class="text-2xl font-bold text-white mb-1">35%</div>
+                            <div class="text-xs text-neutral-500 uppercase tracking-wider">Cheaper Living</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-bold text-white mb-1">Top 5</div>
+                            <div class="text-xs text-neutral-500 uppercase tracking-wider">Safe Havens</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-bold text-white mb-1">10k+</div>
+                            <div class="text-xs text-neutral-500 uppercase tracking-wider">Community</div>
+                        </div>
+                    </div>
                 </div>
+
+                <!-- Globe Spacer (Visual only, globe is fixed bg) -->
+                <div class="hidden md:block h-full min-h-[500px]"></div>
             </div>
         </section>
 
@@ -374,6 +356,157 @@
     <script>
         // Icons
         lucide.createIcons();
+
+        // Three.js Globe Animation
+        const initGlobe = () => {
+            const canvas = document.getElementById('globe-canvas');
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+
+            // Globe Group
+            const globeGroup = new THREE.Group();
+            scene.add(globeGroup);
+
+            // Create particles from GeoJSON
+            // We'll use a simplified set of coordinates for continents if fetching fails or for simplicity
+            // For now, let's fetch a low-res world map JSON
+            const loadContinents = async () => {
+                try {
+                    const response = await fetch('https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json');
+                    const data = await response.json();
+                    
+                    const points = [];
+                    const globeRadius = 5;
+
+                    data.features.forEach(feature => {
+                        const geometry = feature.geometry;
+                        if (geometry.type === 'Polygon' || geometry.type === 'MultiPolygon') {
+                            const coords = geometry.type === 'MultiPolygon' ? geometry.coordinates.flat(1) : geometry.coordinates;
+                            
+                            coords.forEach(ring => {
+                                ring.forEach(coord => {
+                                    const [lon, lat] = coord;
+                                    
+                                    // Convert Lat/Lon to 3D position
+                                    const phi = (90 - lat) * (Math.PI / 180);
+                                    const theta = (lon + 180) * (Math.PI / 180);
+
+                                    const x = -(globeRadius * Math.sin(phi) * Math.cos(theta));
+                                    const z = (globeRadius * Math.sin(phi) * Math.sin(theta));
+                                    const y = (globeRadius * Math.cos(phi));
+
+                                    points.push(x, y, z);
+                                });
+                            });
+                        }
+                    });
+
+                    const geometry = new THREE.BufferGeometry();
+                    geometry.setAttribute('position', new THREE.Float32BufferAttribute(points, 3));
+
+                    const material = new THREE.PointsMaterial({
+                        color: 0x60a5fa,
+                        size: 0.05,
+                        transparent: true,
+                        opacity: 0.8,
+                    });
+
+                    const continentParticles = new THREE.Points(geometry, material);
+                    globeGroup.add(continentParticles);
+                    
+                    // Add a faint wireframe sphere for context
+                    const sphereGeo = new THREE.SphereGeometry(globeRadius - 0.1, 32, 32);
+                    const sphereMat = new THREE.MeshBasicMaterial({
+                        color: 0x000000,
+                        transparent: true,
+                        opacity: 0.3, // Lower opacity
+                    });
+                    const sphere = new THREE.Mesh(sphereGeo, sphereMat);
+                    globeGroup.add(sphere);
+
+                } catch (e) {
+                    console.error("Failed to load globe data", e);
+                    // Fallback to random particles if fetch fails
+                    const particleCount = 2000;
+                    const globeRadius = 5;
+                    const geometry = new THREE.BufferGeometry();
+                    const positions = new Float32Array(particleCount * 3);
+        
+                    for (let i = 0; i < particleCount; i++) {
+                        const phi = Math.acos(-1 + (2 * i) / particleCount);
+                        const theta = Math.sqrt(particleCount * Math.PI) * phi;
+        
+                        const x = globeRadius * Math.sin(phi) * Math.cos(theta);
+                        const y = globeRadius * Math.sin(phi) * Math.sin(theta);
+                        const z = globeRadius * Math.cos(phi);
+        
+                        positions[i * 3] = x;
+                        positions[i * 3 + 1] = y;
+                        positions[i * 3 + 2] = z;
+                    }
+        
+                    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+                    const material = new THREE.PointsMaterial({
+                        color: 0x60a5fa,
+                        size: 0.05,
+                        transparent: true,
+                        opacity: 0.8,
+                    });
+                    const particles = new THREE.Points(geometry, material);
+                    globeGroup.add(particles);
+                }
+            };
+            
+            loadContinents();
+
+            // Position Camera
+            camera.position.z = 12;
+
+            // Animation Loop
+            const animate = () => {
+                requestAnimationFrame(animate);
+
+                globeGroup.rotation.y += 0.0005; // Slower rotation
+                globeGroup.rotation.x = 0.2; 
+
+                renderer.render(scene, camera);
+            };
+
+            animate();
+
+            // Resize Handler
+            const onResize = () => {
+                const width = window.innerWidth;
+                const height = window.innerHeight;
+                
+                camera.aspect = width / height;
+                camera.updateProjectionMatrix();
+                renderer.setSize(width, height);
+
+                // Responsive Globe Positioning
+                if (width < 768) {
+                    // Mobile: Move globe down so it sits below text or as a background footer
+                    globeGroup.position.x = 0;
+                    globeGroup.position.y = -2.5; 
+                    globeGroup.scale.set(0.6, 0.6, 0.6);
+                } else {
+                    // Desktop: Move further to right side to avoid overlap
+                    globeGroup.position.x = 4.0;
+                    globeGroup.position.y = 0;
+                    globeGroup.scale.set(1, 1, 1);
+                }
+            };
+
+            window.addEventListener('resize', onResize);
+            onResize(); // Initial call
+        };
+
+        // Initialize Globe when DOM is ready
+        document.addEventListener('DOMContentLoaded', initGlobe);
     </script>
 </body>
 </html>
