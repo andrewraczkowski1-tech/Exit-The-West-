@@ -126,12 +126,12 @@
 
                 <!-- Action -->
                 <div class="flex items-center gap-4">
-                    <button onclick="openVisaChecker()" class="hidden md:flex items-center gap-2 pl-4 pr-1 py-1 rounded-full bg-white text-black font-medium text-sm hover:bg-neutral-200 transition-all group shadow-[0_0_20px_rgba(52,211,153,0.6)] animate-pulse">
-                        Visa Checker
+                    <a href="https://www.passportindex.org/byRank.php" target="_blank" class="hidden md:flex items-center gap-2 pl-4 pr-1 py-1 rounded-full bg-white text-black font-medium text-sm border-2 border-red-500 hover:bg-neutral-100 transition-colors group">
+                        Strength of Passport
                         <span class="w-7 h-7 rounded-full bg-black flex items-center justify-center text-white group-hover:scale-110 transition-transform">
-                            <i data-lucide="search" class="w-3.5 h-3.5"></i>
+                            <i data-lucide="globe" class="w-3.5 h-3.5"></i>
                         </span>
-                    </button>
+                    </a>
                     <!-- Mobile Menu Button -->
                     <button class="md:hidden p-2 text-neutral-400 hover:text-white">
                         <i data-lucide="menu" class="w-6 h-6"></i>
@@ -224,22 +224,22 @@
                             <i data-lucide="trending-down" class="w-6 h-6"></i>
                         </div>
                         <h3 class="text-2xl font-medium tracking-tight mb-3">Lower Cost of Living</h3>
-                        <p class="text-neutral-400 leading-relaxed max-w-md">Geo-arbitrage your life: move from high-cost Western systems to economies where everyday expenses are fundamentally lower.</p>
+                        <p class="text-neutral-400 leading-relaxed max-w-md">Geo-arbitrage is the powerful strategy of earning in a high-income currency (like from your remote job, pension, or investments back home) while living in a place where your money goes much further.</p>
                     </div>
                 </div>
 
-                <!-- Small Card 1: Dating -->
+                <!-- Small Card 1: Safety -->
                 <div class="glass-panel rounded-2xl p-6 hover:bg-white/5 transition-colors">
                     <i data-lucide="shield" class="w-5 h-5 text-neutral-300 mb-4"></i>
                     <h3 class="text-lg font-medium tracking-tight mb-2">Better Safety</h3>
-                    <p class="text-sm text-neutral-400">Live where everyday movement doesn’t involve risk management. Physical safety matters more than political narratives.</p>
+                    <p class="text-sm text-neutral-400">Moving from high-crime environments to safer destinations transforms your life. In places where knife crime, theft, violence against women and children are everyday worries.</p>
                 </div>
 
-                <!-- Small Card 2: Culture -->
+                <!-- Small Card 2: Quality of Life -->
                 <div class="glass-panel rounded-2xl p-6 hover:bg-white/5 transition-colors">
                     <i data-lucide="volume-x" class="w-5 h-5 text-neutral-300 mb-4"></i>
                     <h3 class="text-lg font-medium tracking-tight mb-2">Better Quality of Life</h3>
-                    <p class="text-sm text-neutral-400">Leave the political polarization and cultural wars behind. Find peace, community, and a simpler way of life.</p>
+                    <p class="text-sm text-neutral-400">In many Western countries, real community, easy friendships, and natural dating feel increasingly hard—neighbors stay distant, socializing takes effort.</p>
                 </div>
             </div>
         </section>
@@ -372,197 +372,9 @@
 
     </div>
 
-    <!-- Visa Checker Modal -->
-    <div id="visa-modal" class="modal hidden fixed inset-0 z-50 flex items-center justify-center px-4">
-        <!-- Backdrop -->
-        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeVisaChecker()"></div>
-        
-        <!-- Modal Content -->
-        <div class="relative w-full max-w-lg bg-black border border-white/10 rounded-2xl shadow-2xl overflow-hidden glass-panel p-8">
-            <button onclick="closeVisaChecker()" class="absolute top-4 right-4 text-neutral-400 hover:text-white transition-colors">
-                <i data-lucide="x" class="w-6 h-6"></i>
-            </button>
-            
-            <div class="text-center mb-8">
-                <div class="w-12 h-12 rounded-full bg-emerald-500/10 flex items-center justify-center mx-auto mb-4 border border-emerald-500/20">
-                    <i data-lucide="globe" class="w-6 h-6 text-emerald-400"></i>
-                </div>
-                <h3 class="text-2xl font-medium tracking-tight text-white mb-2">Check Visa Requirements</h3>
-                <p class="text-neutral-400 text-sm">Find out if you need a visa for your next destination.</p>
-            </div>
-
-            <div class="space-y-6">
-                <!-- Origin -->
-                <div>
-                    <label class="block text-xs font-medium text-neutral-500 uppercase tracking-wider mb-2">I am a citizen of</label>
-                    <select id="origin-country" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-emerald-500/50 transition-colors [&>option]:bg-black [&>option]:text-white">
-                        <option value="" disabled selected class="bg-black text-neutral-500">Select Passport</option>
-                        <!-- Top Countries -->
-                        <option value="US" class="bg-black text-white">United States</option>
-                        <option value="GB" class="bg-black text-white">United Kingdom</option>
-                        <option value="CA" class="bg-black text-white">Canada</option>
-                        <option value="AU" class="bg-black text-white">Australia</option>
-                        <option value="DE" class="bg-black text-white">Germany</option>
-                        <option value="FR" class="bg-black text-white">France</option>
-                        <option value="IT" class="bg-black text-white">Italy</option>
-                        <option value="ES" class="bg-black text-white">Spain</option>
-                        <option value="NL" class="bg-black text-white">Netherlands</option>
-                        <option value="SE" class="bg-black text-white">Sweden</option>
-                        <!-- Separator -->
-                        <option disabled class="bg-black text-neutral-600">──────────</option>
-                        <!-- Common Asian Expat Origins -->
-                        <option value="SG" class="bg-black text-white">Singapore</option>
-                        <option value="JP" class="bg-black text-white">Japan</option>
-                        <option value="KR" class="bg-black text-white">South Korea</option>
-                        <option value="NZ" class="bg-black text-white">New Zealand</option>
-                    </select>
-                </div>
-
-                <!-- Destination -->
-                <div>
-                    <label class="block text-xs font-medium text-neutral-500 uppercase tracking-wider mb-2">Traveling to</label>
-                    <select id="dest-country" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-emerald-500/50 transition-colors [&>option]:bg-black [&>option]:text-white">
-                        <option value="" disabled selected class="bg-black text-neutral-500">Select Destination</option>
-                        <!-- Popular Expat Destinations -->
-                        <option value="TH" class="bg-black text-white">Thailand</option>
-                        <option value="VN" class="bg-black text-white">Vietnam</option>
-                        <option value="ID" class="bg-black text-white">Indonesia (Bali)</option>
-                        <option value="PH" class="bg-black text-white">Philippines</option>
-                        <option value="MY" class="bg-black text-white">Malaysia</option>
-                        <option value="JP" class="bg-black text-white">Japan</option>
-                        <option value="KH" class="bg-black text-white">Cambodia</option>
-                        <option value="SG" class="bg-black text-white">Singapore</option>
-                        <option value="TW" class="bg-black text-white">Taiwan</option>
-                        <option value="MX" class="bg-black text-white">Mexico</option>
-                        <option value="PT" class="bg-black text-white">Portugal</option>
-                        <option value="AE" class="bg-black text-white">UAE (Dubai)</option>
-                    </select>
-                </div>
-
-                <button onclick="checkVisa()" id="check-btn" class="w-full py-3.5 rounded-xl bg-white text-black font-medium hover:bg-neutral-200 transition-colors flex items-center justify-center gap-2">
-                    Check Requirements
-                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                </button>
-
-                <!-- Result -->
-                <div id="visa-result" class="hidden mt-6 p-4 rounded-xl border border-white/10 bg-white/5">
-                    <div class="flex items-start gap-4">
-                        <div id="result-icon" class="w-10 h-10 rounded-lg bg-emerald-500/10 flex items-center justify-center shrink-0">
-                            <i data-lucide="check" class="w-5 h-5 text-emerald-400"></i>
-                        </div>
-                        <div>
-                            <h4 id="result-title" class="text-white font-medium mb-1">Visa Free</h4>
-                            <p id="result-desc" class="text-sm text-neutral-400 leading-relaxed">You can enter this country without a visa.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script>
         // Icons
         lucide.createIcons();
-
-        // Visa Checker Logic
-        const modal = document.getElementById('visa-modal');
-        const originSelect = document.getElementById('origin-country');
-        const destSelect = document.getElementById('dest-country');
-        const checkBtn = document.getElementById('check-btn');
-        const resultBox = document.getElementById('visa-result');
-        const resultTitle = document.getElementById('result-title');
-        const resultDesc = document.getElementById('result-desc');
-        const resultIcon = document.getElementById('result-icon');
-
-        function openVisaChecker() {
-            modal.classList.remove('hidden');
-        }
-
-        function closeVisaChecker() {
-            modal.classList.add('hidden');
-            resultBox.classList.add('hidden'); // Reset result
-        }
-
-        async function checkVisa() {
-            const origin = originSelect.value;
-            const dest = destSelect.value;
-
-            if (!origin || !dest) {
-                alert('Please select both a passport and a destination.');
-                return;
-            }
-
-            // Loading State
-            const originalBtnText = checkBtn.innerHTML;
-            checkBtn.innerHTML = '<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i> Checking...';
-            lucide.createIcons();
-            checkBtn.disabled = true;
-            resultBox.classList.add('hidden');
-
-            try {
-                // Call our local Vercel function
-                const response = await fetch('/api/check-visa', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ passport: origin, destination: dest })
-                });
-
-                if (!response.ok) throw new Error('Failed to fetch data');
-
-                const data = await response.json();
-                
-                // Process Result (Travel Buddy API Structure)
-                // The API usually returns: { status: "OK", data: { visa_status: "Visa Required", ... } }
-                // Adjust based on actual API response structure inspection if needed.
-                // Assuming typical response for this example:
-                const status = data.data?.visa_status || "Unknown";
-                const details = data.data?.visa_type || "";
-                const duration = data.data?.duration || "";
-
-                // Update UI based on status
-                resultBox.classList.remove('hidden');
-                resultTitle.textContent = status;
-                
-                let desc = `Travel with ${origin} passport to ${dest}.`;
-                if (duration) desc += ` Allowed stay: ${duration}.`;
-                if (details) desc += ` Type: ${details}.`;
-                
-                resultDesc.textContent = desc;
-
-                // Color/Icon Logic
-                const isVisaFree = status.toLowerCase().includes('free') || status.toLowerCase().includes('exempt');
-                const isVisaOnArrival = status.toLowerCase().includes('arrival');
-                
-                if (isVisaFree) {
-                    resultIcon.className = "w-10 h-10 rounded-lg bg-emerald-500/10 flex items-center justify-center shrink-0 border border-emerald-500/20";
-                    resultIcon.innerHTML = '<i data-lucide="check" class="w-5 h-5 text-emerald-400"></i>';
-                } else if (isVisaOnArrival) {
-                    resultIcon.className = "w-10 h-10 rounded-lg bg-yellow-500/10 flex items-center justify-center shrink-0 border border-yellow-500/20";
-                    resultIcon.innerHTML = '<i data-lucide="alert-circle" class="w-5 h-5 text-yellow-400"></i>';
-                } else {
-                    resultIcon.className = "w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center shrink-0 border border-red-500/20";
-                    resultIcon.innerHTML = '<i data-lucide="x" class="w-5 h-5 text-red-400"></i>';
-                }
-                lucide.createIcons();
-
-            } catch (error) {
-                console.error(error);
-                // Fallback / Mock Data for Local Testing if API fails (e.g. 404 on local server)
-                // Since user is running Python server, /api/check-visa won't exist.
-                // We'll show a mocked success so they can see the UI.
-                
-                resultBox.classList.remove('hidden');
-                resultTitle.textContent = "Visa Checker (Demo Mode)";
-                resultDesc.textContent = `You checked: ${origin} to ${dest}. (Note: Real API requires Vercel deployment. This is a UI demo.)`;
-                
-                resultIcon.className = "w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center shrink-0 border border-blue-500/20";
-                resultIcon.innerHTML = '<i data-lucide="info" class="w-5 h-5 text-blue-400"></i>';
-                lucide.createIcons();
-            } finally {
-                checkBtn.innerHTML = originalBtnText;
-                checkBtn.disabled = false;
-            }
-        }
 
         // Three.js Globe Animation
         const initGlobe = () => {
