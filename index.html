@@ -17,15 +17,28 @@
         }
         body {
             font-family: var(--font-sans);
-            background-color: #000;
+            background-color: #0a0a0a;
             color: #fff;
         }
         
+        /* Shaded page background — clean dark with subtle depth */
+        .page-gradient {
+            background: linear-gradient(
+                180deg,
+                #0a0a0a 0%,
+                #0f0f0f 20%,
+                #141414 45%,
+                #0f0f0f 70%,
+                #0a0a0a 100%
+            );
+        }
+
         /* Visa Checker Dropdown Styles */
         select option {
-            background-color: #000;
+            background-color: #1a1a1a;
             color: #fff;
         }
+        .modal {
             transition: opacity 0.3s ease, visibility 0.3s ease;
         }
         .modal.hidden {
@@ -54,19 +67,20 @@
         .delay-400 { animation-delay: 0.4s; }
        
         .glass-panel {
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.04);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
         }
        
         .glass-button {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             transition: all 0.3s ease;
         }
         .glass-button:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.18);
         }
 
         /* Ethena-style typography adjustments */
@@ -75,7 +89,7 @@
         }
         
         .hero-gradient-text {
-            background: linear-gradient(to right, #fff, #9ca3af);
+            background: linear-gradient(to right, #ffffff, #e5e5e5);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -83,8 +97,8 @@
         /* Subtle grid background */
         .bg-grid {
             background-size: 60px 60px;
-            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                              linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
             mask-image: radial-gradient(circle at center, black 30%, transparent 100%);
         }
     </style>
@@ -92,17 +106,16 @@
 <body class="h-full antialiased selection:bg-emerald-500/30 selection:text-emerald-200 overflow-x-hidden">
 
     <!-- View: Landing Page -->
-    <div id="landing-view" class="h-full w-full bg-black relative">
+    <div id="landing-view" class="h-full w-full page-gradient relative">
        
-        <!-- Background Ambient -->
+        <!-- Background Ambient — minimal, clean -->
         <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-            <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-emerald-900/10 rounded-full blur-[120px]"></div>
-            <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-900/10 rounded-full blur-[120px]"></div>
+            <div class="absolute top-[10%] left-[50%] -translate-x-1/2 w-[60%] h-[40%] bg-white/[0.02] rounded-full blur-[150px]"></div>
             
             <!-- Three.js Globe -->
-            <canvas id="globe-canvas" class="absolute inset-0 z-0 opacity-40"></canvas>
+            <canvas id="globe-canvas" class="absolute inset-0 z-0 opacity-70"></canvas>
             
-            <div class="absolute inset-0 bg-grid z-0 opacity-20"></div>
+            <div class="absolute inset-0 bg-grid z-0 opacity-40"></div>
         </div>
 
         <!-- Header -->
@@ -117,11 +130,11 @@
                 </a>
 
                 <!-- Desktop Nav -->
-                <nav class="hidden md:flex items-center gap-1 p-1 rounded-full border border-white/10 bg-white/5 backdrop-blur-md">
-                    <a href="#problems" class="px-4 py-1.5 text-sm text-neutral-400 hover:text-white transition-colors font-medium">Why Exit?</a>
-                    <a href="#videos" class="px-4 py-1.5 text-sm text-neutral-400 hover:text-white transition-colors font-medium">Videos</a>
-                    <a href="#services" class="px-4 py-1.5 text-sm text-neutral-400 hover:text-white transition-colors font-medium">Services</a>
-                    <a href="#products" class="px-4 py-1.5 text-sm text-neutral-400 hover:text-white transition-colors font-medium">Products</a>
+                <nav class="hidden md:flex items-center gap-1 p-1 rounded-full border border-white/10 bg-white/10 backdrop-blur-md">
+                    <a href="#problems" class="px-4 py-1.5 text-sm text-neutral-300 hover:text-white transition-colors font-medium">Why Exit?</a>
+                    <a href="#videos" class="px-4 py-1.5 text-sm text-neutral-300 hover:text-white transition-colors font-medium">Videos</a>
+                    <a href="#services" class="px-4 py-1.5 text-sm text-neutral-300 hover:text-white transition-colors font-medium">Services</a>
+                    <a href="#products" class="px-4 py-1.5 text-sm text-neutral-300 hover:text-white transition-colors font-medium">Products</a>
                 </nav>
 
                 <!-- Action -->
@@ -133,7 +146,7 @@
                         </span>
                     </a>
                     <!-- Mobile Menu Button -->
-                    <button class="md:hidden p-2 text-neutral-400 hover:text-white">
+                    <button class="md:hidden p-2 text-neutral-300 hover:text-white">
                         <i data-lucide="menu" class="w-6 h-6"></i>
                     </button>
                 </div>
@@ -151,7 +164,7 @@
             <div class="max-w-6xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-20">
                 <!-- Text Content -->
                 <div class="text-left z-20">
-                    <div class="animate-fade-in inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-white/80 text-xs font-medium mb-8 uppercase tracking-widest backdrop-blur-sm">
+                    <div class="animate-fade-in inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/10 text-white/80 text-xs font-medium mb-8 uppercase tracking-widest backdrop-blur-sm">
                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
                         Exit The West
                     </div>
@@ -161,11 +174,11 @@
                         <span class="text-white/40">Your Life.</span>
                     </h1>
                    
-                    <p class="animate-fade-in delay-200 text-lg md:text-xl text-neutral-400 max-w-lg mb-10 leading-relaxed font-light">
+                    <p class="animate-fade-in delay-200 text-lg md:text-xl text-neutral-300 max-w-lg mb-10 leading-relaxed font-light">
                         Lower Cost of Living, Better Safety.
                     </p>
 
-                    <ul class="animate-fade-in delay-200 text-neutral-400 mb-10 space-y-2">
+                    <ul class="animate-fade-in delay-200 text-neutral-300 mb-10 space-y-2">
                         <li class="flex items-center gap-2">
                             <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
                             Relocate
@@ -196,15 +209,15 @@
                     <div class="animate-fade-in delay-400 mt-12 grid grid-cols-3 gap-8 border-t border-white/10 pt-8">
                         <div>
                             <div class="text-2xl font-bold text-white mb-1">60-80%</div>
-                            <div class="text-xs text-neutral-500 uppercase tracking-wider">Cheaper Living</div>
+                            <div class="text-xs text-neutral-400 uppercase tracking-wider">Cheaper Living</div>
                         </div>
                         <div>
                             <div class="text-2xl font-bold text-white mb-1">2-3M+</div>
-                            <div class="text-xs text-neutral-500 uppercase tracking-wider">Western Expats</div>
+                            <div class="text-xs text-neutral-400 uppercase tracking-wider">Western Expats</div>
                         </div>
                         <div>
                             <div class="text-2xl font-bold text-white mb-1"></div>
-                            <div class="text-xs text-neutral-500 uppercase tracking-wider"></div>
+                            <div class="text-xs text-neutral-400 uppercase tracking-wider"></div>
                         </div>
                     </div>
                 </div>
@@ -217,8 +230,8 @@
         <!-- Problems / Features Grid -->
         <section id="problems" class="py-24 px-6 max-w-7xl mx-auto">
             <div class="mb-12">
-                <h2 class="text-3xl md:text-4xl font-medium tracking-tight mb-4">Why <span class="text-neutral-500">Exit The West?</span></h2>
-                <p class="text-neutral-400 max-w-xl">We solve the three biggest problems facing 1st world citizens today.</p>
+                <h2 class="text-3xl md:text-4xl font-medium tracking-tight mb-4">Why <span class="text-neutral-400">Exit The West?</span></h2>
+                <p class="text-neutral-300 max-w-xl">We solve the three biggest problems facing 1st world citizens today.</p>
             </div>
            
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -230,22 +243,22 @@
                             <i data-lucide="trending-down" class="w-6 h-6"></i>
                         </div>
                         <h3 class="text-2xl font-medium tracking-tight mb-3">Lower Cost of Living</h3>
-                        <p class="text-neutral-400 leading-relaxed max-w-md">Geo-arbitrage is the powerful strategy of earning in a high-income currency (like from your remote job, pension, or investments back home) while living in a place where your money goes much further.</p>
+                        <p class="text-neutral-300 leading-relaxed max-w-md">Geo-arbitrage is the powerful strategy of earning in a high-income currency (like from your remote job, pension, or investments back home) while living in a place where your money goes much further.</p>
                     </div>
                 </div>
 
                 <!-- Small Card 1: Safety -->
-                <div class="glass-panel rounded-2xl p-6 hover:bg-white/5 transition-colors">
+                <div class="glass-panel rounded-2xl p-6 hover:bg-white/10 transition-colors">
                     <i data-lucide="shield" class="w-5 h-5 text-neutral-300 mb-4"></i>
                     <h3 class="text-lg font-medium tracking-tight mb-2">Better Safety</h3>
-                    <p class="text-sm text-neutral-400">Moving from high-crime environments to safer destinations transforms your life. In places where knife crime, theft, violence against women and children are everyday worries.</p>
+                    <p class="text-sm text-neutral-300">Moving from high-crime environments to safer destinations transforms your life. In places where knife crime, theft, violence against women and children are everyday worries.</p>
                 </div>
 
                 <!-- Small Card 2: Quality of Life -->
-                <div class="glass-panel rounded-2xl p-6 hover:bg-white/5 transition-colors">
+                <div class="glass-panel rounded-2xl p-6 hover:bg-white/10 transition-colors">
                     <i data-lucide="volume-x" class="w-5 h-5 text-neutral-300 mb-4"></i>
                     <h3 class="text-lg font-medium tracking-tight mb-2">Better Quality of Life</h3>
-                    <p class="text-sm text-neutral-400">In the West, real community, friends and organic dating are gone. Relocate to warmer, people-focused cultures.</p>
+                    <p class="text-sm text-neutral-300">In the West, real community, friends and organic dating are gone. Relocate to warmer, people-focused cultures.</p>
                 </div>
             </div>
         </section>
@@ -254,18 +267,17 @@
         <section id="videos" class="py-24 px-6 border-t border-white/5">
              <div class="max-w-7xl mx-auto">
                 <div class="text-center mb-16">
-                    <h2 class="text-3xl md:text-4xl font-medium tracking-tight mb-4">See It For <span class="text-neutral-500">Yourself</span></h2>
-                    <p class="text-neutral-400">Check out our latest guides on YouTube.</p>
+                    <h2 class="text-3xl md:text-4xl font-medium tracking-tight mb-4">See It For <span class="text-neutral-400">Yourself</span></h2>
+                    <p class="text-neutral-300">Check out our latest guides on YouTube.</p>
                 </div>
                 <div class="grid md:grid-cols-3 gap-6">
                     <!-- Video Placeholder 1 -->
                     <div class="glass-panel rounded-xl overflow-hidden group">
-                        <div class="aspect-video bg-neutral-900 flex items-center justify-center relative">
-                            <!-- Replace src with actual embed if available, or keep as placeholder link -->
-                             <div class="absolute inset-0 bg-black/50 flex items-center justify-center group-hover:bg-black/30 transition-all cursor-pointer">
+                        <div class="aspect-video bg-[#141414] flex items-center justify-center relative">
+                             <div class="absolute inset-0 bg-black/30 flex items-center justify-center group-hover:bg-black/10 transition-all cursor-pointer">
                                 <i data-lucide="youtube" class="w-12 h-12 text-red-500 fill-current"></i>
                              </div>
-                             <img src="Thumb exit.jpeg" alt="Video Thumbnail" class="w-full h-full object-cover opacity-50">
+                             <img src="Thumb exit.jpeg" alt="Video Thumbnail" class="w-full h-full object-cover opacity-60">
                         </div>
                         <div class="p-4">
                             <h3 class="text-lg font-medium mb-1">Exit the West</h3>
@@ -274,28 +286,28 @@
                     </div>
                     <!-- Video Placeholder 2 -->
                     <div class="glass-panel rounded-xl overflow-hidden group">
-                         <div class="aspect-video bg-neutral-900 flex items-center justify-center relative">
-                             <div class="absolute inset-0 bg-black/50 flex items-center justify-center group-hover:bg-black/30 transition-all cursor-pointer">
+                         <div class="aspect-video bg-[#141414] flex items-center justify-center relative">
+                             <div class="absolute inset-0 bg-black/30 flex items-center justify-center group-hover:bg-black/10 transition-all cursor-pointer">
                                 <i data-lucide="youtube" class="w-12 h-12 text-red-500 fill-current"></i>
                              </div>
-                             <img src="Thumb reason.png" alt="Video Thumbnail" class="w-full h-full object-cover opacity-50">
+                             <img src="Get Out ( 5 Reasons ).png" alt="Video Thumbnail" class="w-full h-full object-cover opacity-60">
                         </div>
                         <div class="p-4">
-                            <h3 class="text-lg font-medium mb-1">Why I'm Leaving the West for Asia</h3>
-                            <a href="https://www.youtube.com/watch?v=XyQ6VK_vKRI" target="_blank" class="text-sm text-emerald-400 hover:text-emerald-300">Watch on YouTube &rarr;</a>
+                            <h3 class="text-lg font-medium mb-1">GET OUT — 5 Reasons to Leave the West</h3>
+                            <a href="https://www.youtube.com/watch?v=1Y_ujfUGsLA&t=10s" target="_blank" class="text-sm text-emerald-400 hover:text-emerald-300">Watch on YouTube &rarr;</a>
                         </div>
                     </div>
                     <!-- Video Placeholder 3 -->
                     <div class="glass-panel rounded-xl overflow-hidden group">
-                         <div class="aspect-video bg-neutral-900 flex items-center justify-center relative">
-                             <div class="absolute inset-0 bg-black/50 flex items-center justify-center group-hover:bg-black/30 transition-all cursor-pointer">
+                         <div class="aspect-video bg-[#141414] flex items-center justify-center relative">
+                             <div class="absolute inset-0 bg-black/30 flex items-center justify-center group-hover:bg-black/10 transition-all cursor-pointer">
                                 <i data-lucide="youtube" class="w-12 h-12 text-red-500 fill-current"></i>
                              </div>
-                             <img src="Thumb Cost.jpeg" alt="Video Thumbnail" class="w-full h-full object-cover opacity-50">
+                             <img src="77 USA 28 ASIA.png" alt="Video Thumbnail" class="w-full h-full object-cover opacity-60">
                         </div>
                         <div class="p-4">
-                            <h3 class="text-lg font-medium mb-1">UK, Europe, Cambodia, and South Africa cost of living compared</h3>
-                            <a href="https://www.youtube.com/watch?v=263GY-Up1no" target="_blank" class="text-sm text-emerald-400 hover:text-emerald-300">Watch on YouTube &rarr;</a>
+                            <h3 class="text-lg font-medium mb-1">$77 America vs $28 Asia — Cost of Living</h3>
+                            <a href="https://www.youtube.com/watch?v=tgcavoydEKc" target="_blank" class="text-sm text-emerald-400 hover:text-emerald-300">Watch on YouTube &rarr;</a>
                         </div>
                     </div>
                 </div>
@@ -303,20 +315,20 @@
         </section>
 
         <!-- Services & Support -->
-        <section id="services" class="py-24 px-6 bg-white/5">
+        <section id="services" class="py-24 px-6 bg-white/[0.02]">
             <div class="max-w-5xl mx-auto">
                 <div class="text-center mb-16">
-                    <h2 class="text-3xl md:text-4xl font-medium tracking-tight mb-4">Start Your <span class="text-neutral-500">Exit Plan</span></h2>
-                    <p class="text-neutral-400">Get personal guidance.</p>
+                    <h2 class="text-3xl md:text-4xl font-medium tracking-tight mb-4">Start Your <span class="text-neutral-400">Exit Plan</span></h2>
+                    <p class="text-neutral-300">Get personal guidance.</p>
                 </div>
                 <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
                     <!-- Consultation -->
                     <div class="glass-panel rounded-3xl p-8 relative border-emerald-500/20">
                          <div class="absolute top-0 right-0 bg-emerald-500/20 px-3 py-1 rounded-bl-xl text-[10px] font-bold text-emerald-400 uppercase tracking-wider">Most Popular</div>
                         <h3 class="text-xl font-medium mb-2">1-on-1 Consultation</h3>
-                        <p class="text-neutral-400 mb-6 text-sm h-12">Personalized advice on where to go, how to move, and what to expect.</p>
+                        <p class="text-neutral-300 mb-6 text-sm h-12">Personalized advice on where to go, how to move, and what to expect.</p>
                         
-                        <a href="https://calendly.com/exitthewest/30min" target="_blank" class="block w-full py-3 rounded-xl bg-emerald-500 text-black font-medium text-sm hover:bg-emerald-400 transition-colors shadow-[0_0_20px_rgba(16,185,129,0.2)] text-center">
+                        <a href="https://calendly.com/exitthewest/30min" target="_blank" class="block w-full py-3 rounded-xl bg-emerald-500 text-black font-medium text-sm hover:bg-emerald-400 transition-colors shadow-[0_0_30px_rgba(52,211,153,0.4)] text-center">
                             Book a Call
                         </a>
                     </div>
@@ -324,7 +336,7 @@
                     <!-- Support -->
                     <div class="glass-panel rounded-3xl p-8 relative">
                         <h3 class="text-xl font-medium mb-2">Support the Channel</h3>
-                        <p class="text-neutral-400 mb-6 text-sm h-12">Help us keep creating content. Join the community or buy us a coffee.</p>
+                        <p class="text-neutral-300 mb-6 text-sm h-12">Help us keep creating content. Join the community or buy us a coffee.</p>
                         
                         <div class="grid grid-cols-2 gap-3">
                             <a href="https://buymeacoffee.com/andrewraczo" target="_blank" class="py-2.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/10 text-white font-medium text-sm transition-colors flex items-center justify-center gap-2">
@@ -344,11 +356,11 @@
 
         <!-- Newsletter / PDF -->
         <section id="newsletter" class="py-24 px-6 relative overflow-hidden">
-             <div class="absolute inset-0 bg-emerald-900/10 z-0"></div>
+             <div class="absolute inset-0 bg-white/[0.02] z-0"></div>
              <div class="max-w-3xl mx-auto text-center relative z-10">
                 <i data-lucide="file-text" class="w-12 h-12 text-emerald-400 mx-auto mb-6"></i>
                 <h2 class="text-3xl md:text-4xl font-medium tracking-tight mb-4">Free Exit To Asia Cheat Sheet !</h2>
-                <p class="text-neutral-400 mb-8">Download our exclusive Exit To Asia Cheat Sheet PDF.</p>
+                <p class="text-neutral-300 mb-8">Download our exclusive Exit To Asia Cheat Sheet PDF.</p>
                 
                 <a href="https://preview.mailerlite.io/forms/2059684/177410426222412903/share" target="_blank" class="block w-full sm:w-auto bg-white text-black px-8 py-3 rounded-full font-medium hover:bg-neutral-200 transition-colors border-2 border-red-500 text-center">
                     Get Free Exit to Asia Cheat Sheet
@@ -357,7 +369,7 @@
         </section>
 
         <!-- Footer -->
-        <footer id="support" class="py-12 px-6 border-t border-white/10 bg-black">
+        <footer id="support" class="py-12 px-6 border-t border-white/[0.06] bg-[#080808]">
             <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
                 <div class="flex items-center gap-2">
                     <div class="w-6 h-6 rounded-md bg-white/10 flex items-center justify-center border border-white/10">
@@ -366,9 +378,9 @@
                     <span class="text-sm font-medium text-white/50">© 2025 Exit The West</span>
                 </div>
                 <div class="flex gap-6">
-                    <a href="#" class="text-xs text-neutral-500 hover:text-white transition-colors">Privacy</a>
-                    <a href="#" class="text-xs text-neutral-500 hover:text-white transition-colors">Terms</a>
-                    <a href="#" class="text-xs text-neutral-500 hover:text-white transition-colors">YouTube</a>
+                    <a href="#" class="text-xs text-neutral-400 hover:text-white transition-colors">Privacy</a>
+                    <a href="#" class="text-xs text-neutral-400 hover:text-white transition-colors">Terms</a>
+                    <a href="#" class="text-xs text-neutral-400 hover:text-white transition-colors">YouTube</a>
                 </div>
             </div>
         </footer>
@@ -431,8 +443,8 @@
                     geometry.setAttribute('position', new THREE.Float32BufferAttribute(points, 3));
 
                     const material = new THREE.PointsMaterial({
-                        color: 0x60a5fa,
-                        size: 0.05,
+                        color: 0x38bdf8,
+                        size: 0.06,
                         transparent: true,
                         opacity: 0.8,
                     });
@@ -443,9 +455,9 @@
                     // Add a faint wireframe sphere for context
                     const sphereGeo = new THREE.SphereGeometry(globeRadius - 0.1, 32, 32);
                     const sphereMat = new THREE.MeshBasicMaterial({
-                        color: 0x000000,
+                        color: 0x1a1a1a,
                         transparent: true,
-                        opacity: 0.3, // Lower opacity
+                        opacity: 0.3,
                     });
                     const sphere = new THREE.Mesh(sphereGeo, sphereMat);
                     globeGroup.add(sphere);
@@ -473,8 +485,8 @@
         
                     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
                     const material = new THREE.PointsMaterial({
-                        color: 0x60a5fa,
-                        size: 0.05,
+                        color: 0x38bdf8,
+                        size: 0.06,
                         transparent: true,
                         opacity: 0.8,
                     });
